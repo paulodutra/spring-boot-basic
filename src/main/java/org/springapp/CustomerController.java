@@ -1,14 +1,16 @@
 package org.springapp;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import org.springapp.entity.Customer;
 import org.springapp.entity.repository.CustomerRepository;
+
+
 
 @Controller
 @RequestMapping(path = "/customers")
@@ -18,6 +20,24 @@ public class CustomerController {
 
     public CustomerController(CustomerRepository customerRepository) {
         this.repository = customerRepository;
+    }
+
+    @GetMapping
+    @ResponseBody
+    public List<Customer> findAll() {
+        return (List<Customer>) repository.findAll();
+    }
+
+    @GetMapping(path = "/{id}")
+    @ResponseBody
+    public Optional<Customer> findOne(@PathVariable Long id) {
+        return Optional.ofNullable(repository.findById(id).orElse(null));
+    }
+
+    @GetMapping(path = "/name/{name}")
+    @ResponseBody
+    public Customer findByName(@PathVariable String name) {
+        return repository.findByName(name);
     }
 
     @PostMapping
