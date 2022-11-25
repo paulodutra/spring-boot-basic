@@ -1,4 +1,4 @@
-package com.springapp.entity;
+package org.springapp.entity;
 
 import javax.persistence.*;
 
