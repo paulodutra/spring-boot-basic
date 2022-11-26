@@ -50,5 +50,14 @@ public class CustomerController {
         return customer;
     }
 
+    @DeleteMapping(path = "/{id}")
+    @ResponseBody
+    public void destroy(@PathVariable Long id){
+       Customer customer = repository.findById(id).orElse(null);
+       if(customer != null) {
+           repository.delete(customer);
+       }
+    }
+
 
 }
